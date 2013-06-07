@@ -443,7 +443,7 @@ syn match perlSubPrototypeError "(\%(\_s*\%(\%(\\\%([$@%&*]\|\[[$@%&*]\+\]\)\|[$
 syn match perlSubPrototype +(\_[^)]*)\_s*\|+ nextgroup=perlSubAttributes,perlComment contained contains=perlSubPrototypeError
 syn match perlSubName +\%(\h\|::\|'\w\)\%(\w\|::\|'\w\)*\_s*\|+ contained nextgroup=perlSubPrototype,perlComment
 
-syn match perlFunction +\<sub\>\_s*+ nextgroup=perlSubName
+syn match perlFunction +\<\%(func\|sub\)\>\_s*+ nextgroup=perlSubName
 
 if !exists("perl_no_scope_in_variables")
    syn match  perlFunctionPRef	"\h\w*::" contained
@@ -487,10 +487,10 @@ if exists("perl_fold")
   endif
   if !exists("perl_nofold_subs")
     if exists("perl_fold_anonymous_subs") && perl_fold_anonymous_subs
-      syn region perlSubFold     start="^\z(\s*\).*\<sub\>.*[^};]$" end="^\z1}" transparent fold keepend
+      syn region perlSubFold     start="^\z(\s*\).*\<\%(sub\|func\)\>.*[^};]$" end="^\z1}" transparent fold keepend
       syn region perlSubFold start="^\z(\s*\)\<\(BEGIN\|END\|CHECK\|INIT\)\>.*[^};]$" end="^\z1}" transparent fold keepend
     else
-      syn region perlSubFold     start="^\z(\s*\)\<sub\>.*[^};]$" end="^\z1}\s*\%(#.*\)\=$" transparent fold keepend
+      syn region perlSubFold     start="^\z(\s*\)\<\%(sub\|func\)\>.*[^};]$" end="^\z1}\s*\%(#.*\)\=$" transparent fold keepend
       syn region perlSubFold start="^\z(\s*\)\<\%(BEGIN\|END\|CHECK\|INIT\|UNITCHECK\)\>.*[^};]$" end="^\z1}\s*$" transparent fold keepend
     endif
   endif
@@ -612,7 +612,7 @@ delcommand HiLink
 "
 if !exists("perl_no_sync_on_sub")
   syn sync match perlSync	grouphere NONE "^\s*\<package\s"
-  syn sync match perlSync	grouphere NONE "^\s*\<sub\>"
+  syn sync match perlSync	grouphere NONE "^\s*\<\%(sub\|func\)\>"
   syn sync match perlSync	grouphere NONE "^}"
 endif
 
